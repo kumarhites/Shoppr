@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'SimplonBP Medium';
+    src: local('SimplonBP-Medium'),
+         url('../assets/fonts/SimplonBP-Medium.woff2') format('woff'),
+         url('../assets/fonts/SimplonBP-Medium.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'SimplonBP Regular';
+    src: local('SimplonBP-Regular'),
+         url('../assets/fonts/SimplonBP-Regular.woff2') format('woff'),
+         url('../assets/fonts/SimplonBP-Regular.woff2') format('woff2');
+}

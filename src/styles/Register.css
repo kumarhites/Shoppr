@@ -1,0 +1,89 @@
+@import url("./fonts.css");
+.container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loginCard {
+  padding: 0.5rem 2rem;
+  flex-direction: column;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 0.5rem 1rem rgba(143, 142, 142, 0.15) !important;
+}
+.heading {
+  padding: 1rem 1rem;
+  margin: 0 auto;
+  font-family: var(--primaryText);
+}
+.heading p,
+.heading h2 {
+  margin-block: 0;
+  margin: 0.5rem 0;
+}
+.heading h2 {
+  font-size: 2.5rem;
+  color: #141414;
+}
+.heading p {
+  font-family: var(--secondaryText);
+}
+.spanTxt {
+  font-family: var(--primaryText);
+  font-size: medium;
+}
+.email,
+.password,
+.submit,
+.firstName,
+.lastName {
+  font-family: var(--secondaryText);
+  font-weight: 600;
+  padding: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  width: 18rem;
+}
+.submit {
+  display: flex;
+  padding-bottom: 1rem;
+  gap: 10px;
+}
+.loginBtn,
+.testLoginBtn {
+  font-size: 1rem;
+  align-items: center;
+  height: 38px;
+  border-radius: 0.4rem;
+  padding: 0 1.1rem;
+  color: #ffffff;
+  border: none;
+  font-family: var(--secondaryText);
+  background: #141414;
+  transition-duration: 0.3s;
+}
+.loginBtn:hover,
+.testLoginBtn:hover {
+  background: #000000;
+  color: #ffffff;
+}
+.input {
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 2px 15px;
+  height: 38px;
+  color: black;
+  font-weight: 500;
+  outline: none;
+  font-family: var(--secondaryText);
+  transition-duration: 0.3s;
+}
+.email label,
+.password label {
+  padding: 4px 0;
+}
+.email input,
+.password input, .firstName input, .lastName input {
+  font-size: 1rem;
+}
