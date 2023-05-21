@@ -1,51 +1,51 @@
 import { createContext, useEffect, useState } from "react";
+import axios from "axios";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [loginInput, setLoginInput] = useState({});
-  const [validCredentials, setValidCredentials] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [loginInput, setLoginInput] = useState({
+    email: "",
+    password: "",
+  });
+  const [userType, setUserType] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const [loginClick, setLoginClick] = useState(false);
 
-  // Test credentials
-  const loginWithTestCredentials = () => {
-    setValidCredentials({
-      email: "iwillbeback@gmail.com",
-      password: "arnie123",
-    });
+  const getAuthToken = async () => {
+    if (userType === "") {
+      return;
+    }
+    if (userType === "existing") {
+      try {
+        const response = await axios.post("/api/auth/login", loginInput);
+        console.log(response.data);
+      } catch (error) {
+        const errorType = "Auth";
+        console.error(errorType, error);
+        if (
+          error.response.data.errors[0].includes("Unauthorized access error.")
+        ) {
+          // console.log("Response data:", error.response.data.errors[0]);
+          setErrorMsg("Invalid email or password");
+        } else if (error.response.data.errors[0].includes("Not Found")) {
+          setErrorMsg("User not registered");
+        }
+      }
+      setUserType("");
+    }
   };
 
-  // Validate email and password
-  const validateEmailPassword = (loginInput) => {
-    const { email, password } = loginInput;
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const isValidEmail = emailRegex.test(email);
-
-    const passwordRegex = /^\w{6,}$/; // At least 6 letters or digits
-    const isValidPassword = passwordRegex.test(password);
-
-    
-  };
-const getData = async () => {
-  try {
-    const response = await fetch("/api/auth/login")
-  } catch (error) {
-    
-  }
-}
-  
+  useEffect(() => {
+    getAuthToken();
+  }, [loginInput]);
 
   return (
     <AuthContext.Provider
       value={{
         setLoginInput,
-        loading,
-        setLoginClick,
+        setUserType,
         errorMsg,
-        loginWithTestCredentials,
+        setErrorMsg,
       }}
     >
       {children}

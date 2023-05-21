@@ -3,20 +3,16 @@ import "../styles/Login.css";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "..";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { Toaster } from "react-hot-toast"
 import Loader from "./Loader";
 
 function Login() {
-  const {
-    setLoginInput,
-    loading,
-    setLoginClick,
-    errorMsg,
-    loginWithTestCredentials,
-  } = useContext(AuthContext);
+  const { setLoginInput, errorMsg, setUserType, setErrorMsg } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -33,25 +29,46 @@ function Login() {
   };
 
   const handleTestLogin = () => {
-    loginWithTestCredentials();
+    setLoginInput({ 
+      email: "testUser@gmail.com",
+      password: "test123"
+     });
+     setUserType("existing");
   };
 
   // form validation
   const handleLoginClick = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordRegex = /^\w{6,}$/;
     if (email === "") {
-      setError("Email cannot be empty!");
+      setErrorMsg("Email cannot be empty!");
     } else if (password === "") {
-      setError("Password cannot be empty!");
+      setErrorMsg("Password cannot be empty!");
     } else {
-      setLoginInput({ email, password });
-      setEmail("");
-      setPassword("");
-      setLoginClick(true);
+      const isValidEmail = emailRegex.test(email);
+      const isValidPassword = passwordRegex.test(password);
+      switch (true) {
+        case !isValidEmail:
+        case !isValidPassword:
+          setErrorMsg("Email or password is not valid");
+          break;
+        default:
+          setLoading(true);
+          setLoginInput({ email, password });
+          setEmail("");
+          setPassword("");
+          setTimeout(() => {
+            setLoading(false);
+          }, 2000);
+          setUserType("existing")
+          break;
+      }
     }
   };
 
   return (
     <div className="container">
+      <Toaster />
       <div className="loginCard">
         <div className="heading">
           <h2>Welcome!</h2>
@@ -59,7 +76,7 @@ function Login() {
         </div>
 
         <div className="loginForm">
-          {error ? <span className="errorMsg">{error}</span> : ""}
+          {/* {error ? <span className="errorMsg">{error}</span> : ""} */}
           {errorMsg ? <span className="errorMsg">{errorMsg}</span> : ""}
           <form onSubmit={(e) => e.preventDefault()}>
             <div className="email">
@@ -79,7 +96,7 @@ function Login() {
                 type={showPassword ? "text" : "password"}
                 name="passwordInput"
                 className="input"
-                placeholder="Password"
+                placeholder="Password (Min. 6 Characters)"
                 onChange={handlePasswordChange}
                 value={password}
               />
