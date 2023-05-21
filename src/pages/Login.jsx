@@ -6,8 +6,13 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import Loader from "./Loader";
 
 function Login() {
-  const { setLoginInput, loading, setLoginClick, errorMsg } =
-    useContext(AuthContext);
+  const {
+    setLoginInput,
+    loading,
+    setLoginClick,
+    errorMsg,
+    loginWithTestCredentials,
+  } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
@@ -27,6 +32,10 @@ function Login() {
     setShowPassword(!showPassword);
   };
 
+  const handleTestLogin = () => {
+    loginWithTestCredentials();
+  };
+
   // form validation
   const handleLoginClick = () => {
     if (email === "") {
@@ -37,7 +46,7 @@ function Login() {
       setLoginInput({ email, password });
       setEmail("");
       setPassword("");
-      setLoginClick("existing");
+      setLoginClick(true);
     }
   };
 
@@ -141,6 +150,7 @@ function Login() {
                 type="submit"
                 value="Login with Test Credentials"
                 className="testLoginBtn"
+                onClick={handleTestLogin}
               />
             </div>
             <div className="registerBtn">
