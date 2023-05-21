@@ -9,10 +9,10 @@ import { formatDate } from "../utils/authUtils";
 export const users = [
   {
     _id: uuid(),
-    firstName: "Adarsh",
-    lastName: "Balika",
-    email: "adarshbalika@gmail.com",
-    password: "adarshbalika",
+    firstName: "Arnold",
+    lastName: "Schwarzenegger",
+    email: "iwillbeback@gmail.com",
+    password: "arnie",
     createdAt: formatDate(),
     updatedAt: formatDate(),
   },
