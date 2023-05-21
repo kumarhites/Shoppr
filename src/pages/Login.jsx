@@ -3,25 +3,24 @@ import "../styles/Login.css";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "..";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { Toaster } from "react-hot-toast"
-import Loader from "./Loader";
+import { Toaster } from "react-hot-toast";
 
 function Login() {
-  const { setLoginInput, errorMsg, setUserType, setErrorMsg } = useContext(AuthContext);
+  const { setLoginInput, errorMsg, setUserType, setErrorMsg } =
+    useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
-    setError("");
+    setErrorMsg("");
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
-    setError("");
+    setErrorMsg("");
   };
 
   const togglePasswordVisibility = () => {
@@ -29,11 +28,11 @@ function Login() {
   };
 
   const handleTestLogin = () => {
-    setLoginInput({ 
+    setLoginInput({
       email: "testUser@gmail.com",
-      password: "test123"
-     });
-     setUserType("existing");
+      password: "test123",
+    });
+    setUserType("existing");
   };
 
   // form validation
@@ -60,7 +59,7 @@ function Login() {
           setTimeout(() => {
             setLoading(false);
           }, 2000);
-          setUserType("existing")
+          setUserType("existing");
           break;
       }
     }
@@ -76,7 +75,6 @@ function Login() {
         </div>
 
         <div className="loginForm">
-          {/* {error ? <span className="errorMsg">{error}</span> : ""} */}
           {errorMsg ? <span className="errorMsg">{errorMsg}</span> : ""}
           <form onSubmit={(e) => e.preventDefault()}>
             <div className="email">

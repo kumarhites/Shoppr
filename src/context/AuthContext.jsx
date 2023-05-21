@@ -18,14 +18,11 @@ export const AuthProvider = ({ children }) => {
     if (userType === "existing") {
       try {
         const response = await axios.post("/api/auth/login", loginInput);
-        console.log(response.data);
       } catch (error) {
         const errorType = "Auth";
-        console.error(errorType, error);
         if (
           error.response.data.errors[0].includes("Unauthorized access error.")
         ) {
-          // console.log("Response data:", error.response.data.errors[0]);
           setErrorMsg("Invalid email or password");
         } else if (error.response.data.errors[0].includes("Not Found")) {
           setErrorMsg("User not registered");
